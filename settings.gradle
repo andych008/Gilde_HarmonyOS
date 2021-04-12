@@ -1,1 +1,1 @@
-include ':entry', ':glidelibrary'
+include ':entry', ':glidelibrary', ':useAar'
