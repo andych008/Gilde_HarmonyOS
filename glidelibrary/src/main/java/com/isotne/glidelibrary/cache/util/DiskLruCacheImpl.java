@@ -1,6 +1,7 @@
 package com.isotne.glidelibrary.cache.util;
 
 import com.isotne.glidelibrary.utils.LogUtils;
+import com.jakewharton.disklrucache.DiskLruCache;
 import ohos.media.image.ImageSource;
 import ohos.media.image.PixelMap;
 
