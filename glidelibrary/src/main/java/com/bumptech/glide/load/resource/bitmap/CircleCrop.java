@@ -1,0 +1,69 @@
+package com.bumptech.glide.load.resource.bitmap;
+
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import ohos.app.Context;
+import ohos.media.image.PixelMap;
+import android.support.annotation.NonNull;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import java.security.MessageDigest;
+
+/**
+ * A Glide {@link BitmapTransformation} to circle crop an image.  Behaves similar to a
+ * {@link FitCenter} transform, but the resulting image is masked to a circle.
+ *
+ * <p> Uses a PorterDuff blend mode, see http://ssp.impulsetrain.com/porterduff.html. </p>
+ */
+public class CircleCrop extends BitmapTransformation {
+  // The version of this transformation, incremented to correct an error in a previous version.
+  // See #455.
+  private static final int VERSION = 1;
+  private static final String ID = "com.bumptech.glide.load.resource.bitmap.CircleCrop." + VERSION;
+  private static final byte[] ID_BYTES = ID.getBytes(CHARSET);
+
+  public CircleCrop() {
+    // Intentionally empty.
+  }
+
+  /**
+   * @deprecated Use {@link #CircleCrop()}.
+   * @param context Ignored.
+   */
+  @Deprecated
+  public CircleCrop(@SuppressWarnings("unused") Context context) {
+    this();
+  }
+
+  /**
+   * @deprecated Use {@link #CircleCrop()}
+   * @param bitmapPool Ignored.
+   */
+  @Deprecated
+  public CircleCrop(@SuppressWarnings("unused") BitmapPool bitmapPool) {
+    this();
+  }
+
+  // Bitmap doesn't implement equals, so == and .equals are equivalent here.
+  @SuppressWarnings("PMD.CompareObjectsWithEquals")
+  @Override
+  protected PixelMap transform(
+      @NonNull BitmapPool pool, @NonNull PixelMap toTransform, int outWidth, int outHeight) {
+    return TransformationUtils.circleCrop(toTransform);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    return o instanceof com.bumptech.glide.load.resource.bitmap.CircleCrop;
+  }
+
+  @Override
+  public int hashCode() {
+    return ID.hashCode();
+  }
+
+  @Override
+  public void updateDiskCacheKey(MessageDigest messageDigest) {
+    messageDigest.update(ID_BYTES);
+  }
+}
