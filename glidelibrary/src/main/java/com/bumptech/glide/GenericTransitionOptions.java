@@ -13,43 +13,33 @@ import com.bumptech.glide.request.transition.ViewPropertyTransition;
 // Public API.
 @SuppressWarnings({"PMD.UseUtilityClass", "unused"})
 public final class GenericTransitionOptions<TranscodeType> extends
-    TransitionOptions<com.bumptech.glide.GenericTransitionOptions<TranscodeType>, TranscodeType> {
+    TransitionOptions<GenericTransitionOptions<TranscodeType>, TranscodeType> {
   /**
    * Removes any existing animation put on the builder.
    *
-   * @see com.bumptech.glide.GenericTransitionOptions#dontTransition()
+   * @see GenericTransitionOptions#dontTransition()
    */
-  public static <TranscodeType> com.bumptech.glide.GenericTransitionOptions<TranscodeType> withNoTransition() {
-    return new com.bumptech.glide.GenericTransitionOptions<TranscodeType>().dontTransition();
+  public static <TranscodeType> GenericTransitionOptions<TranscodeType> withNoTransition() {
+    return new GenericTransitionOptions<TranscodeType>().dontTransition();
   }
 
   /**
-   * Returns a typed {@link com.bumptech.glide.GenericTransitionOptions} object that uses the given view animation.
+   * Returns a typed {@link GenericTransitionOptions} object that uses the given animator.
    *
-   * @see com.bumptech.glide.GenericTransitionOptions#transition(int)
+   * @see GenericTransitionOptions#transition(ViewPropertyTransition.Animator)
    */
-  public static <TranscodeType> com.bumptech.glide.GenericTransitionOptions<TranscodeType> with(
-      int viewAnimationId) {
-    return new com.bumptech.glide.GenericTransitionOptions<TranscodeType>().transition(viewAnimationId);
-  }
-
-  /**
-   * Returns a typed {@link com.bumptech.glide.GenericTransitionOptions} object that uses the given animator.
-   *
-   * @see com.bumptech.glide.GenericTransitionOptions#transition(ViewPropertyTransition.Animator)
-   */
-  public static <TranscodeType> com.bumptech.glide.GenericTransitionOptions<TranscodeType> with(
+  public static <TranscodeType> GenericTransitionOptions<TranscodeType> with(
       ViewPropertyTransition.Animator animator) {
-    return new com.bumptech.glide.GenericTransitionOptions<TranscodeType>().transition(animator);
+    return new GenericTransitionOptions<TranscodeType>().transition(animator);
   }
 
   /**
-   * Returns a typed {@link com.bumptech.glide.GenericTransitionOptions} object that uses the given transition factory.
+   * Returns a typed {@link GenericTransitionOptions} object that uses the given transition factory.
    *
-   * @see com.bumptech.glide.GenericTransitionOptions#transition(TransitionFactory)
+   * @see GenericTransitionOptions#transition(TransitionFactory)
    */
-  public static <TranscodeType> com.bumptech.glide.GenericTransitionOptions<TranscodeType> with(
+  public static <TranscodeType> GenericTransitionOptions<TranscodeType> with(
       TransitionFactory<? super TranscodeType> transitionFactory) {
-    return new com.bumptech.glide.GenericTransitionOptions<TranscodeType>().transition(transitionFactory);
+    return new GenericTransitionOptions<TranscodeType>().transition(transitionFactory);
   }
 }

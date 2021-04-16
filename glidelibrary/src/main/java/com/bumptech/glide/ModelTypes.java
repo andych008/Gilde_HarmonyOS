@@ -26,9 +26,6 @@ interface ModelTypes<T> {
   @CheckResult
   T load(@Nullable File file);
 
-  @CheckResult
-  T load(@RawRes @DrawableRes @Nullable Integer resourceId);
-
   @Deprecated
   @CheckResult
   T load(@Nullable URL url);

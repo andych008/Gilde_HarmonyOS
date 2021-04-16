@@ -315,18 +315,6 @@ public class RequestManager implements LifecycleListener,
   }
 
   /**
-   * Equivalent to calling {@link #asDrawable()} and then {@link RequestBuilder#load(Integer)}.
-   *
-   * @return A new request builder for loading a {@link PixelMap} using the given model.
-   */
-  @SuppressWarnings("deprecation")
-  @CheckResult
-  @Override
-  public RequestBuilder<PixelMap> load(@Nullable Integer resourceId) {
-    return asDrawable().load(resourceId);
-  }
-
-  /**
    * Equivalent to calling {@link #asDrawable()} and then {@link RequestBuilder#load(URL)}.
    *
    * @return A new request builder for loading a {@link PixelMap} using the given model.

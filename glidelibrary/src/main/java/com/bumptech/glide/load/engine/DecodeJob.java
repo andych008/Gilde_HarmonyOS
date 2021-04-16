@@ -1,26 +1,20 @@
 package com.bumptech.glide.load.engine;
 
 import android.support.annotation.NonNull;
-import android.support.v4.os.TraceCompat;
 import android.support.v4.util.Pools;
 import android.util.Log;
 import com.bumptech.glide.GlideContext;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.Registry;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.EncodeStrategy;
-import com.bumptech.glide.load.Key;
-import com.bumptech.glide.load.Options;
-import com.bumptech.glide.load.ResourceEncoder;
-import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.*;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.data.DataRewinder;
 import com.bumptech.glide.load.engine.cache.DiskCache;
-import com.bumptech.glide.load.resource.bitmap.Downsampler;
 import com.bumptech.glide.util.LogTime;
 import com.bumptech.glide.util.Synthetic;
 import com.bumptech.glide.util.pool.FactoryPools.Poolable;
 import com.bumptech.glide.util.pool.StateVerifier;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -221,7 +215,6 @@ class DecodeJob<R> implements DataFetcherGenerator.FetcherReadyCallback,
     // This should be much more fine grained, but since Java's thread pool implementation silently
     // swallows all otherwise fatal exceptions, this will at least make it obvious to developers
     // that something is failing.
-    TraceCompat.beginSection("DecodeJob#run");
     // Methods in the try statement can invalidate currentFetcher, so set a local variable here to
     // ensure that the fetcher is cleaned up either way.
     DataFetcher<?> localFetcher = currentFetcher;
@@ -257,7 +250,6 @@ class DecodeJob<R> implements DataFetcherGenerator.FetcherReadyCallback,
       if (localFetcher != null) {
         localFetcher.cleanup();
       }
-      TraceCompat.endSection();
     }
   }
 
@@ -374,12 +366,7 @@ class DecodeJob<R> implements DataFetcherGenerator.FetcherReadyCallback,
       runReason = RunReason.DECODE_DATA;
       callback.reschedule(this);
     } else {
-      TraceCompat.beginSection("DecodeJob.decodeFromRetrievedData");
-      try {
-        decodeFromRetrievedData();
-      } finally {
-        TraceCompat.endSection();
-      }
+      decodeFromRetrievedData();
     }
   }
 
@@ -519,7 +506,7 @@ class DecodeJob<R> implements DataFetcherGenerator.FetcherReadyCallback,
       Resource<Z> transformed = decoded;
       if (dataSource != DataSource.RESOURCE_DISK_CACHE) {
         appliedTransformation = decodeHelper.getTransformation(resourceSubClass);
-        transformed = appliedTransformation.transform(glideContext, decoded, width, height);
+        transformed = appliedTransformation.transform(glideContext.getContext(), decoded, width, height);
       }
       // TODO: Make this the responsibility of the Transformation.
       if (!decoded.equals(transformed)) {
@@ -632,13 +619,11 @@ class DecodeJob<R> implements DataFetcherGenerator.FetcherReadyCallback,
     }
 
     void encode(DiskCacheProvider diskCacheProvider, Options options) {
-      TraceCompat.beginSection("DecodeJob.encode");
       try {
         diskCacheProvider.getDiskCache().put(key,
             new DataCacheWriter<>(encoder, toEncode, options));
       } finally {
         toEncode.unlock();
-        TraceCompat.endSection();
       }
     }
 

@@ -1,20 +1,19 @@
 package com.bumptech.glide.load.engine;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.util.Pools;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Key;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.engine.executor.GlideExecutor;
 import com.bumptech.glide.request.ResourceCallback;
 import com.bumptech.glide.util.Synthetic;
 import com.bumptech.glide.util.Util;
 import com.bumptech.glide.util.pool.FactoryPools.Poolable;
 import com.bumptech.glide.util.pool.StateVerifier;
+import ohos.eventhandler.EventHandler;
+import ohos.eventhandler.EventRunner;
+import ohos.eventhandler.InnerEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +24,8 @@ import java.util.List;
 class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<R>,
     Poolable {
   private static final EngineResourceFactory DEFAULT_FACTORY = new EngineResourceFactory();
-  private static final Handler MAIN_THREAD_HANDLER =
-      new EventHandler(EventRunner.getMainEventRunner(), new MainThreadCallback());
+  private static final EventHandler MAIN_THREAD_HANDLER =
+      new MainThreadEventHandler(EventRunner.getMainEventRunner());
 
   private static final int MSG_COMPLETE = 1;
   private static final int MSG_EXCEPTION = 2;
@@ -36,7 +35,7 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
 
   private final List<ResourceCallback> cbs = new ArrayList<>(2);
   private final StateVerifier stateVerifier = StateVerifier.newInstance();
-  private final Pools.Pool<com.bumptech.glide.load.engine.EngineJob<?>> pool;
+  private final Pools.Pool<EngineJob<?>> pool;
   private final EngineResourceFactory engineResourceFactory;
   private final com.bumptech.glide.load.engine.EngineJobListener listener;
   private final GlideExecutor diskCacheExecutor;
@@ -69,7 +68,7 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
       GlideExecutor sourceUnlimitedExecutor,
       GlideExecutor animationExecutor,
       com.bumptech.glide.load.engine.EngineJobListener listener,
-      Pools.Pool<com.bumptech.glide.load.engine.EngineJob<?>> pool) {
+      Pools.Pool<EngineJob<?>> pool) {
     this(
         diskCacheExecutor,
         sourceExecutor,
@@ -87,7 +86,7 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
       GlideExecutor sourceUnlimitedExecutor,
       GlideExecutor animationExecutor,
       com.bumptech.glide.load.engine.EngineJobListener listener,
-      Pools.Pool<com.bumptech.glide.load.engine.EngineJob<?>> pool,
+      Pools.Pool<EngineJob<?>> pool,
       EngineResourceFactory engineResourceFactory) {
     this.diskCacheExecutor = diskCacheExecutor;
     this.sourceExecutor = sourceExecutor;
@@ -99,7 +98,7 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
   }
 
   @VisibleForTesting
-  com.bumptech.glide.load.engine.EngineJob<R> init(
+  EngineJob<R> init(
       Key key,
       boolean isCacheable,
       boolean useUnlimitedSourceGeneratorPool,
@@ -258,13 +257,13 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
   public void onResourceReady(Resource<R> resource, DataSource dataSource) {
     this.resource = resource;
     this.dataSource = dataSource;
-    MAIN_THREAD_HANDLER.obtainMessage(MSG_COMPLETE, this).sendToTarget();
+    MAIN_THREAD_HANDLER.sendEvent(InnerEvent.get(MSG_COMPLETE, this));
   }
 
   @Override
   public void onLoadFailed(GlideException e) {
     this.exception = e;
-    MAIN_THREAD_HANDLER.obtainMessage(MSG_EXCEPTION, this).sendToTarget();
+    MAIN_THREAD_HANDLER.sendEvent(InnerEvent.get(MSG_EXCEPTION, this));
   }
 
   @Override
@@ -310,16 +309,19 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
     }
   }
 
-  private static class MainThreadCallback implements Handler.Callback {
+  private static class MainThreadEventHandler extends EventHandler {
 
-    @Synthetic
-    @SuppressWarnings("WeakerAccess")
-    MainThreadCallback() { }
+
+    public MainThreadEventHandler(EventRunner runner) throws IllegalArgumentException {
+      
+      super(runner);
+    }
 
     @Override
-    public boolean handleMessage(Message message) {
-      com.bumptech.glide.load.engine.EngineJob<?> job = (com.bumptech.glide.load.engine.EngineJob<?>) message.obj;
-      switch (message.what) {
+    protected void processEvent(InnerEvent message) {
+
+      EngineJob<?> job = (EngineJob<?>) message.object;
+      switch (message.eventId) {
         case MSG_COMPLETE:
           job.handleResultOnMainThread();
           break;
@@ -330,9 +332,8 @@ class EngineJob<R> implements com.bumptech.glide.load.engine.DecodeJob.Callback<
           job.handleCancelledOnMainThread();
           break;
         default:
-          throw new IllegalStateException("Unrecognized message: " + message.what);
+          throw new IllegalStateException("Unrecognized message: " + message.eventId);
       }
-      return true;
     }
   }
 }

@@ -1,8 +1,9 @@
 package com.bumptech.glide.util;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
+import ohos.agp.utils.TextTool;
+
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;

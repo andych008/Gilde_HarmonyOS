@@ -6,7 +6,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.*;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
-import com.bumptech.glide.signature.ApplicationVersionSignature;
 import com.bumptech.glide.util.Preconditions;
 import com.bumptech.glide.util.Util;
 import ohos.agp.components.Image;
@@ -28,7 +27,7 @@ import static com.bumptech.glide.request.RequestOptions.*;
 // Public API.
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class RequestBuilder<TranscodeType> implements Cloneable,
-        com.bumptech.glide.ModelTypes<RequestBuilder<TranscodeType>> {
+        ModelTypes<RequestBuilder<TranscodeType>> {
   // Used in generated subclasses
   protected static final RequestOptions DOWNLOAD_ONLY_OPTIONS =
       new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA).priority(Priority.LOW)
@@ -380,19 +379,6 @@ public class RequestBuilder<TranscodeType> implements Cloneable,
   @Override
   public RequestBuilder<TranscodeType> load(@Nullable File file) {
     return loadGeneric(file);
-  }
-
-  /**
-   * Returns a request builder that uses the
-   * {@link com.bumptech.glide.load.model.ModelLoaderFactory} currently registered or
-   * {@link Integer} to load the image represented by the given {@link Integer} resource id.
-   * Defaults to @link com.bumptech.glide.load.model.ResourceLoader} to load resource id models.
-   *
-   */
-  @CheckResult
-  @Override
-  public RequestBuilder<TranscodeType> load(@RawRes @DrawableRes @Nullable Integer resourceId) {
-    return loadGeneric(resourceId).apply(signatureOf(ApplicationVersionSignature.obtain(context)));
   }
 
   /**

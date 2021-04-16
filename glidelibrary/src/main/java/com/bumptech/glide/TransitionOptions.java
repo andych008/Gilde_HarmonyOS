@@ -2,7 +2,6 @@ package com.bumptech.glide;
 
 import com.bumptech.glide.request.transition.NoTransition;
 import com.bumptech.glide.request.transition.TransitionFactory;
-import com.bumptech.glide.request.transition.ViewAnimationFactory;
 import com.bumptech.glide.request.transition.ViewPropertyAnimationFactory;
 import com.bumptech.glide.request.transition.ViewPropertyTransition;
 import com.bumptech.glide.util.Preconditions;
@@ -13,7 +12,7 @@ import com.bumptech.glide.util.Preconditions;
  * @param <CHILD>         The implementation of this class to return to chain methods.
  * @param <TranscodeType> The type of resource that will be animated.
  */
-public abstract class TransitionOptions<CHILD extends com.bumptech.glide.TransitionOptions<CHILD, TranscodeType>,
+public abstract class TransitionOptions<CHILD extends TransitionOptions<CHILD, TranscodeType>,
     TranscodeType> implements Cloneable {
   private TransitionFactory<? super TranscodeType> transitionFactory = NoTransition.getFactory();
 
@@ -28,20 +27,7 @@ public abstract class TransitionOptions<CHILD extends com.bumptech.glide.Transit
   }
 
   /**
-   * Sets an {@link android.view.animation.Animation} to run on the wrapped target when an resource
-   * load finishes.
-   * Will only be run if the resource was loaded asynchronously (i.e. was not in the memory cache).
-   *
-   * @param viewAnimationId The resource id of the {@link android.view.animation} to use as the
-   *                        transition.
-   * @return This request builder.
-   */
-  public final CHILD transition(int viewAnimationId) {
-    return transition(new ViewAnimationFactory<>(viewAnimationId));
-  }
-
-  /**
-   * Sets an animator to run a {@link android.view.ViewPropertyAnimator} on a view that the target
+   * Sets an animator to run a @link android.view.ViewPropertyAnimator} on a view that the target
    * may be wrapping when a resource load finishes.
    * Will only be run if the load was loaded asynchronously (i.e. was not in the memory cache).
    *

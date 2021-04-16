@@ -1,7 +1,6 @@
 package com.bumptech.glide.load.model;
 
 import android.support.annotation.NonNull;
-import android.util.Base64;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Options;
@@ -13,6 +12,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 /**
  * A simple model loader for loading data from a Data URL String.
@@ -135,7 +135,7 @@ public final class DataUrlLoader<Data> implements ModelLoader<String, Data> {
           }
 
           String afterComma = url.substring(commaIndex + 1);
-          byte[] bytes = Base64.decode(afterComma, Base64.DEFAULT);
+          byte[] bytes =  Base64.getDecoder().decode(afterComma);
 
           return new ByteArrayInputStream(bytes);
         }

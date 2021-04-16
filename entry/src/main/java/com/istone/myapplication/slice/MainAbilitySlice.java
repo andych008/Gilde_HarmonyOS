@@ -33,6 +33,12 @@ public class MainAbilitySlice extends AbilitySlice {
             present(new ServerAbilitySlice(), new Intent());
         });
 
+        findComponentById(ResourceTable.Id_show_server_button2)
+            .setClickedListener(component -> {
+
+            present(new GlideAbilitySlice(), new Intent());
+        });
+
         Button button3 = (Button) findComponentById(ResourceTable.Id_show_local_button);
         button3.setClickedListener(component -> {
             present(new LocalAbilitySlice(), new Intent());
