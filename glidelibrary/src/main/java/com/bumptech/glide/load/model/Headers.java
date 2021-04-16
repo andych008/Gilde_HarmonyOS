@@ -1,6 +1,5 @@
 package com.bumptech.glide.load.model;
 
-import com.bumptech.glide.load.model.LazyHeaders;
 
 import java.util.Collections;
 import java.util.Map;
@@ -18,7 +17,7 @@ public interface Headers {
    * @deprecated Use {@link #DEFAULT} instead.
    */
   @Deprecated
-  com.bumptech.glide.load.model.Headers NONE = new com.bumptech.glide.load.model.Headers() {
+  Headers NONE = new Headers() {
       @Override
       public Map<String, String> getHeaders() {
           return Collections.emptyMap();
@@ -29,7 +28,7 @@ public interface Headers {
    * A Headers object containing reasonable defaults that should be used when users don't want
    * to provide their own headers.
    */
-  com.bumptech.glide.load.model.Headers DEFAULT = new LazyHeaders.Builder().build();
+  Headers DEFAULT = new LazyHeaders.Builder().build();
 
   /**
    * Returns a non-null map containing a set of headers to apply to an http request.

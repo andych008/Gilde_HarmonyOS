@@ -114,7 +114,7 @@ public class FileLoader<Data> implements ModelLoader<File, Data> {
 
     @Override
     public final ModelLoader<File, Data> build(MultiModelLoaderFactory multiFactory) {
-      return new com.bumptech.glide.load.model.FileLoader<>(opener);
+      return new FileLoader<>(opener);
     }
 
     @Override

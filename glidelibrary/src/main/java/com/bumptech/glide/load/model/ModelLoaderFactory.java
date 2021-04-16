@@ -1,7 +1,5 @@
 package com.bumptech.glide.load.model;
 
-import com.bumptech.glide.load.model.ModelLoader;
-import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import ohos.app.Context;
 
 /**

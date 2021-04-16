@@ -82,7 +82,7 @@ public class Registry {
    * instead.
    */
   @Deprecated
-  public <Data> com.bumptech.glide.Registry register(Class<Data> dataClass, Encoder<Data> encoder) {
+  public <Data> Registry register(Class<Data> dataClass, Encoder<Data> encoder) {
     return append(dataClass, encoder);
   }
 
@@ -101,7 +101,7 @@ public class Registry {
    *
    * @see #prepend(Class, Encoder)
    */
-  public <Data> com.bumptech.glide.Registry append(Class<Data> dataClass, Encoder<Data> encoder) {
+  public <Data> Registry append(Class<Data> dataClass, Encoder<Data> encoder) {
     encoderRegistry.append(dataClass, encoder);
     return this;
   }
@@ -117,7 +117,7 @@ public class Registry {
    *
    * @see #append(Class, Encoder)
    */
-  public <Data> com.bumptech.glide.Registry prepend(Class<Data> dataClass, Encoder<Data> encoder) {
+  public <Data> Registry prepend(Class<Data> dataClass, Encoder<Data> encoder) {
     encoderRegistry.prepend(dataClass, encoder);
     return this;
   }
@@ -138,11 +138,11 @@ public class Registry {
    *
    * @param dataClass The data that will be decoded from
    * ({@link java.io.InputStream}, {@link java.io.FileDescriptor} etc).
-   * @param resourceClass The resource that will be decoded to ({@link ohos.media.image.PixelMap},
+   * @param resourceClass The resource that will be decoded to ({@link android.graphics.Bitmap},
    * {@link com.bumptech.glide.load.resource.gif.GifDrawable} etc).
    * @param decoder The {@link ResourceDecoder} to register.
    */
-  public <Data, TResource> com.bumptech.glide.Registry append(
+  public <Data, TResource> Registry append(
       Class<Data> dataClass,
       Class<TResource> resourceClass,
       ResourceDecoder<Data, TResource> decoder) {
@@ -167,11 +167,11 @@ public class Registry {
    * @param bucket The bucket identifier to add this decoder to.
    * @param dataClass The data that will be decoded from
    * ({@link java.io.InputStream}, {@link java.io.FileDescriptor} etc).
-   * @param resourceClass The resource that will be decoded to ({@link ohos.media.image.PixelMap},
+   * @param resourceClass The resource that will be decoded to ({@link android.graphics.Bitmap},
    * {@link com.bumptech.glide.load.resource.gif.GifDrawable} etc).
    * @param decoder The {@link ResourceDecoder} to register.
    */
-  public <Data, TResource> com.bumptech.glide.Registry append(
+  public <Data, TResource> Registry append(
       String bucket,
       Class<Data> dataClass,
       Class<TResource> resourceClass,
@@ -196,11 +196,11 @@ public class Registry {
    *
    * @param dataClass The data that will be decoded from
    * ({@link java.io.InputStream}, {@link java.io.FileDescriptor} etc).
-   * @param resourceClass The resource that will be decoded to ({@link ohos.media.image.PixelMap},
+   * @param resourceClass The resource that will be decoded to ({@link android.graphics.Bitmap},
    * {@link com.bumptech.glide.load.resource.gif.GifDrawable} etc).
    * @param decoder The {@link ResourceDecoder} to register.
    */
-  public <Data, TResource> com.bumptech.glide.Registry prepend(
+  public <Data, TResource> Registry prepend(
       Class<Data> dataClass,
       Class<TResource> resourceClass,
       ResourceDecoder<Data, TResource> decoder) {
@@ -225,11 +225,11 @@ public class Registry {
    * @param bucket The bucket identifier to add this decoder to.
    * @param dataClass The data that will be decoded from
    * ({@link java.io.InputStream}, {@link java.io.FileDescriptor} etc).
-   * @param resourceClass The resource that will be decoded to ({@link ohos.media.image.PixelMap},
+   * @param resourceClass The resource that will be decoded to ({@link android.graphics.Bitmap},
    * {@link com.bumptech.glide.load.resource.gif.GifDrawable} etc).
    * @param decoder The {@link ResourceDecoder} to register.
    */
-  public <Data, TResource> com.bumptech.glide.Registry prepend(
+  public <Data, TResource> Registry prepend(
       String bucket,
       Class<Data> dataClass,
       Class<TResource> resourceClass,
@@ -254,7 +254,7 @@ public class Registry {
    * @param buckets The list of bucket identifiers in order from highest priority to least priority.
    */
   // Final to avoid a PMD error.
-  public final com.bumptech.glide.Registry setResourceDecoderBucketPriorityList(List<String> buckets) {
+  public final Registry setResourceDecoderBucketPriorityList(List<String> buckets) {
     List<String> modifiedBuckets = new ArrayList<>(buckets);
     modifiedBuckets.add(0, BUCKET_PREPEND_ALL);
     modifiedBuckets.add(BUCKET_APPEND_ALL);
@@ -279,7 +279,7 @@ public class Registry {
    * @deprecated Use the equivalent {@link #append(Class, ResourceEncoder)} method instead.
    */
   @Deprecated
-  public <TResource> com.bumptech.glide.Registry register(
+  public <TResource> Registry register(
       Class<TResource> resourceClass, ResourceEncoder<TResource> encoder) {
     return append(resourceClass, encoder);
   }
@@ -300,7 +300,7 @@ public class Registry {
    *
    * @see #prepend(Class, ResourceEncoder)
    */
-  public <TResource> com.bumptech.glide.Registry append(
+  public <TResource> Registry append(
       Class<TResource> resourceClass, ResourceEncoder<TResource> encoder) {
     resourceEncoderRegistry.append(resourceClass, encoder);
     return this;
@@ -318,17 +318,17 @@ public class Registry {
    *
    * @see #append(Class, ResourceEncoder)
    */
-  public <TResource> com.bumptech.glide.Registry prepend(
+  public <TResource> Registry prepend(
       Class<TResource> resourceClass, ResourceEncoder<TResource> encoder) {
     resourceEncoderRegistry.prepend(resourceClass, encoder);
     return this;
   }
 
   /**
-   * Registers a new {@link DataRewinder.Factory} to handle a
+   * Registers a new {@link com.bumptech.glide.load.data.DataRewinder.Factory} to handle a
    * non-default data type that can be rewind to allow for efficient reads of file headers.
    */
-  public com.bumptech.glide.Registry register(DataRewinder.Factory<?> factory) {
+  public Registry register(DataRewinder.Factory<?> factory) {
     dataRewinderRegistry.register(factory);
     return this;
   }
@@ -338,13 +338,13 @@ public class Registry {
    * to the given transcode {@link Class}.
    *
    * @param resourceClass The class that will be transcoded from (e.g.
-   * {@link ohos.media.image.PixelMap}).
+   * {@link android.graphics.Bitmap}).
    * @param transcodeClass The class that will be transcoded to (e.g.
    * {@link android.graphics.drawable.BitmapDrawable}).
    * @param transcoder The {@link ResourceTranscoder} to register.
    */
-  public <TResource, Transcode> com.bumptech.glide.Registry register(Class<TResource> resourceClass,
-                                                                     Class<Transcode> transcodeClass, ResourceTranscoder<TResource, Transcode> transcoder) {
+  public <TResource, Transcode> Registry register(Class<TResource> resourceClass,
+      Class<Transcode> transcodeClass, ResourceTranscoder<TResource, Transcode> transcoder) {
     transcoderRegistry.register(resourceClass, transcodeClass, transcoder);
     return this;
   }
@@ -353,7 +353,7 @@ public class Registry {
    * Registers a new {@link ImageHeaderParser} that can obtain some basic metadata from an image
    * header (orientation, type etc).
    */
-  public com.bumptech.glide.Registry register(ImageHeaderParser parser) {
+  public Registry register(ImageHeaderParser parser) {
     imageHeaderParserRegistry.add(parser);
     return this;
   }
@@ -380,8 +380,8 @@ public class Registry {
    * @param dataClass  the data class (e.g. {@link java.io.InputStream},
    * {@link java.io.FileDescriptor}).
    */
-  public <Model, Data> com.bumptech.glide.Registry append(Class<Model> modelClass, Class<Data> dataClass,
-                                                          ModelLoaderFactory<Model, Data> factory) {
+  public <Model, Data> Registry append(Class<Model> modelClass, Class<Data> dataClass,
+      ModelLoaderFactory<Model, Data> factory) {
     modelLoaderRegistry.append(modelClass, dataClass, factory);
     return this;
   }
@@ -409,8 +409,8 @@ public class Registry {
    * @param dataClass  the data class (e.g. {@link java.io.InputStream},
    * {@link java.io.FileDescriptor}).
    */
-  public <Model, Data> com.bumptech.glide.Registry prepend(Class<Model> modelClass, Class<Data> dataClass,
-                                                           ModelLoaderFactory<Model, Data> factory) {
+  public <Model, Data> Registry prepend(Class<Model> modelClass, Class<Data> dataClass,
+      ModelLoaderFactory<Model, Data> factory) {
     modelLoaderRegistry.prepend(modelClass, dataClass, factory);
     return this;
   }
@@ -438,7 +438,7 @@ public class Registry {
    * @param dataClass  the data class (e.g. {@link java.io.InputStream},
    * {@link java.io.FileDescriptor}).
    */
-  public <Model, Data> com.bumptech.glide.Registry replace(
+  public <Model, Data> Registry replace(
       Class<Model> modelClass,
       Class<Data> dataClass,
       ModelLoaderFactory<? extends Model, ? extends Data> factory) {
@@ -559,7 +559,7 @@ public class Registry {
   }
 
   /**
-   * Thrown when no {@link ModelLoader} is registered for a given
+   * Thrown when no {@link com.bumptech.glide.load.model.ModelLoader} is registered for a given
    * model class.
    */
   // Never serialized by Glide.

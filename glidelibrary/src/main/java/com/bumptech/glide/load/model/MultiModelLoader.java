@@ -10,7 +10,6 @@ import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.data.DataFetcher.DataCallback;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.util.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,7 @@ import java.util.List;
  *
  * <p> TODO: we should try to find a way to remove this class. It exists to allow individual
  * ModelLoaders to delegate to multiple ModelLoaders without having to duplicate this logic
- * everywhere. We have very similar logic in the @link
+ * everywhere. We have very similar logic in the {@link
  * com.bumptech.glide.load.engine.DataFetcherGenerator} implementations and should try to avoid this
  * duplication. </p>
  */

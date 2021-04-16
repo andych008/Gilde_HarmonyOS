@@ -2,10 +2,6 @@ package com.bumptech.glide.load.model;
 
 import ohos.utils.net.Uri;
 import com.bumptech.glide.load.Options;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.ModelLoader;
-import com.bumptech.glide.load.model.ModelLoaderFactory;
-import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -55,7 +51,7 @@ public class UrlUriLoader<Data> implements ModelLoader<Uri, Data> {
 
     @Override
     public ModelLoader<Uri, InputStream> build(MultiModelLoaderFactory multiFactory) {
-      return new com.bumptech.glide.load.model.UrlUriLoader<>(multiFactory.build(GlideUrl.class, InputStream.class));
+      return new UrlUriLoader<>(multiFactory.build(GlideUrl.class, InputStream.class));
     }
 
     @Override

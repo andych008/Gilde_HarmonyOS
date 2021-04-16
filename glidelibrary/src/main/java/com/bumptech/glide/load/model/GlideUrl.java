@@ -134,8 +134,8 @@ public class GlideUrl implements Key {
 
   @Override
   public boolean equals(Object o) {
-    if (o instanceof com.bumptech.glide.load.model.GlideUrl) {
-      com.bumptech.glide.load.model.GlideUrl other = (com.bumptech.glide.load.model.GlideUrl) o;
+    if (o instanceof GlideUrl) {
+      GlideUrl other = (GlideUrl) o;
       return getCacheKey().equals(other.getCacheKey())
           && headers.equals(other.headers);
     }

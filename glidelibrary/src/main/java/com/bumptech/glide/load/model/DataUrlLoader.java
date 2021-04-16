@@ -5,9 +5,6 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.data.DataFetcher;
-import com.bumptech.glide.load.model.ModelLoader;
-import com.bumptech.glide.load.model.ModelLoaderFactory;
-import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.signature.ObjectKey;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -154,7 +151,7 @@ public final class DataUrlLoader<Data> implements ModelLoader<String, Data> {
 
     @Override
     public final ModelLoader<String, InputStream> build(MultiModelLoaderFactory multiFactory) {
-      return new com.bumptech.glide.load.model.DataUrlLoader<>(opener);
+      return new DataUrlLoader<>(opener);
     }
 
     @Override

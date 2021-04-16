@@ -7,8 +7,11 @@ import com.bumptech.glide.Registry.NoModelLoaderAvailableException;
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.util.Preconditions;
 import com.bumptech.glide.util.Synthetic;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Capable of building an {@link ModelLoader} that wraps one or more other {@link ModelLoader}s for
@@ -197,9 +200,9 @@ public class MultiModelLoaderFactory {
   }
 
   static class Factory {
-    public <Model, Data> com.bumptech.glide.load.model.MultiModelLoader<Model, Data> build(
+    public <Model, Data> MultiModelLoader<Model, Data> build(
         List<ModelLoader<Model, Data>> modelLoaders, Pool<List<Throwable>> throwableListPool) {
-      return new com.bumptech.glide.load.model.MultiModelLoader<>(modelLoaders, throwableListPool);
+      return new MultiModelLoader<>(modelLoaders, throwableListPool);
     }
   }
 
