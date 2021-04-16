@@ -2,7 +2,12 @@ package com.bumptech.glide.load.engine.cache;
 
 import android.util.Log;
 import com.bumptech.glide.util.Preconditions;
+import ohos.agp.utils.Point;
+import ohos.agp.window.service.Display;
+import ohos.agp.window.service.DisplayManager;
 import ohos.app.Context;
+
+import java.util.Optional;
 
 /**
  * A calculator that tries to intelligently determine cache sizes for a given device based on some
@@ -23,7 +28,7 @@ public final class MemorySizeCalculator {
   }
 
   // Package private to avoid PMD warning.
-  MemorySizeCalculator(com.bumptech.glide.load.engine.cache.MemorySizeCalculator.Builder builder) {
+  MemorySizeCalculator(MemorySizeCalculator.Builder builder) {
 
     arrayPoolSize = builder.arrayPoolSizeBytes;
     int maxSize =
@@ -122,6 +127,7 @@ public final class MemorySizeCalculator {
 
     public Builder(Context context) {
       this.context = context;
+      screenDimensions = new DisplayMetricsScreenDimensions(context);
     }
 
     /**
@@ -190,6 +196,27 @@ public final class MemorySizeCalculator {
 
     public MemorySizeCalculator build() {
       return new MemorySizeCalculator(this);
+    }
+  }
+
+  private static final class DisplayMetricsScreenDimensions implements ScreenDimensions {
+    private Point displayDimensions = new Point();
+
+    DisplayMetricsScreenDimensions(Context context) {
+      Optional<Display>
+          display = DisplayManager.getInstance().getDefaultDisplay(context);
+      display.get().getSize(displayDimensions);
+
+    }
+
+    @Override
+    public int getWidthPixels() {
+      return displayDimensions.getPointXToInt();
+    }
+
+    @Override
+    public int getHeightPixels() {
+      return displayDimensions.getPointYToInt();
     }
   }
 }
