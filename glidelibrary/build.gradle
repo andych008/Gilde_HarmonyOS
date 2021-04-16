@@ -9,7 +9,7 @@ ohos {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(dir: '../libs', include: ['*.jar', '*.har'])
     implementation 'com.squareup.okhttp3:okhttp:4.4.0'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'

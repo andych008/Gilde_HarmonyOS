@@ -9,11 +9,13 @@ import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
+import timber.log.Timber;
+
 import java.io.InputStream;
 
 /**
- * An {@link ModelLoader} for translating {@link
- * GlideUrl} (http/https URLS) into {@link InputStream} data.
+ * An {@link com.bumptech.glide.load.model.ModelLoader} for translating {@link
+ * com.bumptech.glide.load.model.GlideUrl} (http/https URLS) into {@link java.io.InputStream} data.
  */
 // Public API.
 @SuppressWarnings("WeakerAccess")
@@ -56,18 +58,19 @@ public class HttpGlideUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 
   @Override
   public boolean handles(GlideUrl model) {
+    Timber.d("handles() called with: model = [ %s ]", model);
     return true;
   }
 
   /**
-   * The default factory for {@link com.bumptech.glide.load.model.stream.HttpGlideUrlLoader}s.
+   * The default factory for {@link HttpGlideUrlLoader}s.
    */
   public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
     private final ModelCache<GlideUrl, GlideUrl> modelCache = new ModelCache<>(500);
 
     @Override
     public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
-      return new com.bumptech.glide.load.model.stream.HttpGlideUrlLoader(modelCache);
+      return new HttpGlideUrlLoader(modelCache);
     }
 
     @Override

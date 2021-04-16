@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.engine.cache.MemoryCache;
 import com.bumptech.glide.load.model.*;
 import com.bumptech.glide.load.model.stream.HttpGlideUrlLoader;
+import com.bumptech.glide.load.model.stream.HttpUriLoader;
 import com.bumptech.glide.load.model.stream.UrlLoader;
 import com.bumptech.glide.load.resource.bitmap.*;
 import com.bumptech.glide.load.resource.bytes.ByteBufferRewinder;
@@ -22,6 +23,7 @@ import com.bumptech.glide.util.Preconditions;
 import com.bumptech.glide.util.Util;
 import ohos.app.Context;
 import ohos.media.image.PixelMap;
+import ohos.utils.net.Uri;
 
 import java.io.File;
 import java.io.InputStream;
@@ -126,9 +128,9 @@ public class Glide {
     builder.setRequestManagerFactory(factory);
 
 
-    com.bumptech.glide.Glide glide = builder.build(applicationContext);
+    Glide glide = builder.build(applicationContext);
 
-    com.bumptech.glide.Glide.glide = glide;
+    Glide.glide = glide;
   }
 
   @Nullable
@@ -209,6 +211,11 @@ public class Glide {
         /* Models */
         .register(new InputStreamRewinder.Factory(arrayPool))
         .append(String.class, InputStream.class, new DataUrlLoader.StreamFactory())
+        .append(String.class, InputStream.class, new StringLoader.StreamFactory())
+
+        .append(Uri.class, InputStream.class, new HttpUriLoader.Factory())
+
+        .append(Uri.class, InputStream.class, new UrlUriLoader.StreamFactory())
         .append(URL.class, InputStream.class, new UrlLoader.StreamFactory())
         .append(GlideUrl.class, InputStream.class, new HttpGlideUrlLoader.Factory())
         .append(byte[].class, ByteBuffer.class, new ByteArrayLoader.ByteBufferFactory())

@@ -7,6 +7,7 @@ import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import ohos.utils.net.Uri;
+import timber.log.Timber;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -31,11 +32,13 @@ public class HttpUriLoader implements ModelLoader<Uri, InputStream> {
 
   @Override
   public LoadData<InputStream> buildLoadData(Uri model, int width, int height, Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return urlLoader.buildLoadData(new GlideUrl(model.toString()), width, height, options);
   }
 
   @Override
   public boolean handles(Uri model) {
+    Timber.d("handles() called with: model = [ %s ]", model);
     return SCHEMES.contains(model.getScheme());
   }
 

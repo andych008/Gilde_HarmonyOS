@@ -9,7 +9,6 @@ import com.bumptech.glide.load.model.Headers;
 import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;
 import ohos.agp.utils.TextTool;
-import ohos.global.i18n.utils.TextRecognitionUtils;
 
 import java.io.InputStream;
 import java.util.ArrayList;
