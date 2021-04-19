@@ -28,13 +28,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * Responsible for starting loads and managing active and cached resources.
  */
-public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
+public class Engine implements EngineJobListener,
     MemoryCache.ResourceRemovedListener,
     EngineResource.ResourceListener {
   private static final String TAG = "Engine";
   private static final int JOB_POOL_SIZE = 150;
   private final Jobs jobs;
-  private final com.bumptech.glide.load.engine.EngineKeyFactory keyFactory;
+  private final EngineKeyFactory keyFactory;
   private final MemoryCache cache;
   private final EngineJobFactory engineJobFactory;
   private final ResourceRecycler resourceRecycler;
@@ -74,7 +74,7 @@ public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
       GlideExecutor sourceUnlimitedExecutor,
       GlideExecutor animationExecutor,
       Jobs jobs,
-      com.bumptech.glide.load.engine.EngineKeyFactory keyFactory,
+      EngineKeyFactory keyFactory,
       ActiveResources activeResources,
       EngineJobFactory engineJobFactory,
       DecodeJobFactory decodeJobFactory,
@@ -90,7 +90,7 @@ public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
     activeResources.setListener(this);
 
     if (keyFactory == null) {
-      keyFactory = new com.bumptech.glide.load.engine.EngineKeyFactory();
+      keyFactory = new EngineKeyFactory();
     }
     this.keyFactory = keyFactory;
 
@@ -167,7 +167,7 @@ public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
     Util.assertMainThread();
     long startTime = LogTime.getLogTime();
 
-    com.bumptech.glide.load.engine.EngineKey key = keyFactory.buildKey(model, signature, width, height, transformations,
+    EngineKey key = keyFactory.buildKey(model, signature, width, height, transformations,
         resourceClass, transcodeClass, options);
 
     EngineResource<?> active = loadFromActiveResources(key, isMemoryCacheable);
@@ -410,7 +410,7 @@ public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
     @SuppressWarnings("unchecked")
     <R> DecodeJob<R> build(GlideContext glideContext,
         Object model,
-        com.bumptech.glide.load.engine.EngineKey loadKey,
+        EngineKey loadKey,
         Key signature,
         int width,
         int height,
@@ -452,7 +452,7 @@ public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
     @Synthetic final GlideExecutor sourceExecutor;
     @Synthetic final GlideExecutor sourceUnlimitedExecutor;
     @Synthetic final GlideExecutor animationExecutor;
-    @Synthetic final com.bumptech.glide.load.engine.EngineJobListener listener;
+    @Synthetic final EngineJobListener listener;
     @Synthetic final Pools.Pool<EngineJob<?>> pool = FactoryPools.simple(JOB_POOL_SIZE,
         new FactoryPools.Factory<EngineJob<?>>() {
           @Override
@@ -472,7 +472,7 @@ public class Engine implements com.bumptech.glide.load.engine.EngineJobListener,
         GlideExecutor sourceExecutor,
         GlideExecutor sourceUnlimitedExecutor,
         GlideExecutor animationExecutor,
-        com.bumptech.glide.load.engine.EngineJobListener listener) {
+        EngineJobListener listener) {
       this.diskCacheExecutor = diskCacheExecutor;
       this.sourceExecutor = sourceExecutor;
       this.sourceUnlimitedExecutor = sourceUnlimitedExecutor;

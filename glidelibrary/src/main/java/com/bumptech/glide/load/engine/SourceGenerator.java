@@ -27,9 +27,9 @@ class SourceGenerator implements DataFetcherGenerator,
   private final FetcherReadyCallback cb;
 
   private int loadDataListIndex;
-  private com.bumptech.glide.load.engine.DataCacheGenerator sourceCacheGenerator;
+  private DataCacheGenerator sourceCacheGenerator;
   private Object dataToCache;
-  private volatile LoadData<?> loadData;
+  private volatile ModelLoader.LoadData<?> loadData;
   private DataCacheKey originalKey;
 
   SourceGenerator(DecodeHelper<?> helper, FetcherReadyCallback cb) {
@@ -88,7 +88,7 @@ class SourceGenerator implements DataFetcherGenerator,
     }
 
     sourceCacheGenerator =
-        new com.bumptech.glide.load.engine.DataCacheGenerator(Collections.singletonList(loadData.sourceKey), helper, this);
+        new DataCacheGenerator(Collections.singletonList(loadData.sourceKey), helper, this);
   }
 
   @Override

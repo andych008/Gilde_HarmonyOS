@@ -29,7 +29,7 @@ class ResourceCacheGenerator implements DataFetcherGenerator,
   // multiple calls to startNext.
   @SuppressWarnings("PMD.SingularField")
   private File cacheFile;
-  private com.bumptech.glide.load.engine.ResourceCacheKey currentKey;
+  private ResourceCacheKey currentKey;
 
   ResourceCacheGenerator(DecodeHelper<?> helper, FetcherReadyCallback cb) {
     this.helper = helper;
@@ -58,7 +58,7 @@ class ResourceCacheGenerator implements DataFetcherGenerator,
       Transformation<?> transformation = helper.getTransformation(resourceClass);
 
       currentKey =
-          new com.bumptech.glide.load.engine.ResourceCacheKey(
+          new ResourceCacheKey(
               helper.getArrayPool(),
               sourceId,
               helper.getSignature(),
