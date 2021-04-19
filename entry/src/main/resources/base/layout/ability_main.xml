@@ -48,7 +48,7 @@
         ohos:text_color="black"
         ohos:text_font="serif"
         ohos:text_size="20vp"
-        ohos:visibility="invisible"/>
+        ohos:visibility="visible"/>
 
 
     <Button

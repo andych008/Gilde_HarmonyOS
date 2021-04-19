@@ -41,7 +41,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         Button button3 = (Button) findComponentById(ResourceTable.Id_show_local_button);
         button3.setClickedListener(component -> {
-            present(new LocalAbilitySlice(), new Intent());
+            present(new LocalAbilitySlice2(), new Intent());
         });
 
         Button button4 = (Button) findComponentById(ResourceTable.Id_show_gif_button);

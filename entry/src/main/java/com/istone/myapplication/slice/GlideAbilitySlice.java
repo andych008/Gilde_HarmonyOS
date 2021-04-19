@@ -34,8 +34,9 @@ public class GlideAbilitySlice extends AbilitySlice {
                 RequestManager requestManager = Glide.with(getContext());
 
                 RequestOptions options = new RequestOptions();
-                options.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
-                RequestBuilder<PixelMap> request = requestManager.applyDefaultRequestOptions(options).load("https://developer.harmonyos.com/resource/image/DevEco-Studio/DevEco-Studio-0.png");
+                options.skipMemoryCache(true);
+//                options.diskCacheStrategy(DiskCacheStrategy.NONE);
+                RequestBuilder<PixelMap> request = requestManager.load("https://developer.harmonyos.com/resource/image/DevEco-Studio/DevEco-Studio-0.png");
 
                 System.out.println("00000/"+ request);
                 request.into(image);

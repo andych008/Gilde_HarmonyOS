@@ -25,7 +25,7 @@ public class LocalAbilitySlice extends AbilitySlice {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_local);
         Image image = (Image) findComponentById(ResourceTable.Id_local_image);
-        File file = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath(), "test.png");
+        File file = new File(this.getFilesDir().getAbsolutePath(), "test.png");
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);

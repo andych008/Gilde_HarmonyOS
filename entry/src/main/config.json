@@ -17,7 +17,7 @@
     "package": "com.istone.myapplication",
     "name": "com.istone.myapplication.HarmonyOS",
     "deviceType": [
-      "phone"
+      "phone","tv"
     ],
     "distro": {
       "deliveryWithInstall": true,
