@@ -1,5 +1,6 @@
 package com.bumptech.glide.load.data;
 
+import android.content.ContentResolver;
 import android.support.annotation.NonNull;
 import ohos.aafwk.ability.DataAbilityHelper;
 import ohos.aafwk.ability.DataAbilityRemoteException;
@@ -33,12 +34,20 @@ public class StreamLocalUriFetcher extends LocalUriFetcher<InputStream> {
       throws FileNotFoundException {
     InputStream inputStream = null;
 
-    try {
-      FileDescriptor fd = dataAbilityHelper.openFile(uri,"r");
-      inputStream = new FileInputStream(fd);
-    } catch (DataAbilityRemoteException e) {
-      e.printStackTrace();
+    System.out.println(uri);
+
+    if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
+      try {
+        FileDescriptor fd = dataAbilityHelper.openFile(uri,"r");
+        inputStream = new FileInputStream(fd);
+      } catch (DataAbilityRemoteException e) {
+        e.printStackTrace();
+      }
+    } else if (ContentResolver.SCHEME_FILE.equals(uri.getScheme())) {
+      System.out.println("uri.getDecodedPath() = "+uri.getDecodedPath());
+      inputStream = new FileInputStream(new File(uri.getDecodedPath()));
     }
+
 
     return inputStream;
   }
