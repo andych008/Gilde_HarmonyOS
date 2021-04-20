@@ -220,7 +220,7 @@ public class Glide {
             InputStream.class,
             new UriLoader.StreamFactory(context))
         .append(Uri.class, InputStream.class, new UrlUriLoader.StreamFactory())
-        .append(Uri.class, InputStream.class, new MediaStoreInputStreamLoader.Factory(context))
+//        .append(Uri.class, InputStream.class, new MediaStoreInputStreamLoader.Factory(context))
         .append(URL.class, InputStream.class, new UrlLoader.StreamFactory())
         .append(GlideUrl.class, InputStream.class, new HttpGlideUrlLoader.Factory())
         .append(byte[].class, ByteBuffer.class, new ByteArrayLoader.ByteBufferFactory())
