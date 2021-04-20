@@ -25,7 +25,31 @@
         ohos:text_size="25fp"
         ohos:background_element="#FF51A8DD"
         ohos:padding="10vp"
-        ohos:text="加载网络图片circle"/>
+        ohos:text="加载相册图片"/>
+    <DirectionalLayout
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:orientation="horizontal">
+        <Button
+            ohos:id="$+id:btn3_1"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:top_margin="35vp"
+            ohos:text_size="25fp"
+            ohos:background_element="#FF51A8DD"
+            ohos:padding="10vp"
+            ohos:text="保存图片到本地"/>
+        <Button
+            ohos:id="$+id:btn3_2"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:top_margin="35vp"
+            ohos:text_size="25fp"
+            ohos:background_element="#FF51A8DD"
+            ohos:padding="10vp"
+            ohos:text="加载本地图片"/>
+    </DirectionalLayout>
+
 
     <Image
         ohos:id="$+id:image"

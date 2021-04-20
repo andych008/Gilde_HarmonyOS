@@ -21,8 +21,8 @@ public class UnitModelLoader<Model> implements ModelLoader<Model, Model> {
   private static final UnitModelLoader<?> INSTANCE = new UnitModelLoader<>();
 
   @SuppressWarnings("unchecked")
-  public static <T> com.bumptech.glide.load.model.UnitModelLoader<T> getInstance() {
-    return (com.bumptech.glide.load.model.UnitModelLoader<T>) INSTANCE;
+  public static <T> UnitModelLoader<T> getInstance() {
+    return (UnitModelLoader<T>) INSTANCE;
   }
 
   /**
@@ -82,7 +82,7 @@ public class UnitModelLoader<Model> implements ModelLoader<Model, Model> {
   }
 
   /**
-   * Factory for producing {@link com.bumptech.glide.load.model.UnitModelLoader}s.
+   * Factory for producing {@link UnitModelLoader}s.
    *
    * @param <Model> The type of model that will also be returned as decodable data.
    */
@@ -105,7 +105,7 @@ public class UnitModelLoader<Model> implements ModelLoader<Model, Model> {
 
     @Override
     public ModelLoader<Model, Model> build(MultiModelLoaderFactory multiFactory) {
-      return com.bumptech.glide.load.model.UnitModelLoader.getInstance();
+      return UnitModelLoader.getInstance();
     }
 
     @Override
