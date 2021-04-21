@@ -1,6 +1,7 @@
 package com.istone.myapplication.slice;
 
 
+import android.content.ContentResolver;
 import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -20,6 +21,7 @@ import ohos.bundle.IBundleManager;
 import ohos.data.resultset.ResultSet;
 import ohos.global.resource.RawFileEntry;
 import ohos.global.resource.Resource;
+import ohos.media.image.ImageSource;
 import ohos.media.image.PixelMap;
 import ohos.media.photokit.metadata.AVStorage;
 import ohos.utils.net.Uri;
@@ -138,6 +140,36 @@ public class GlideAbilitySlice extends AbilitySlice {
 
                 Timber.d("uri = [ %s ]", uri.getDecodedPath());
                 Glide.with(getContext()).load(uri).into(image);
+            }
+        });
+
+        findComponentById(ResourceTable.Id_btn6).setClickedListener(new Component.ClickedListener() {
+            @Override
+            public void onClick(Component component) {
+
+                logBtn(component);
+
+                //<scheme>://<authority><absolute path>?<query>#<fragment>
+                Uri uri = new Uri.Builder()
+                        .scheme(ContentResolver.SCHEME_FILE)
+                        .decodedAuthority("")
+                        .decodedPath("resources/rawfile/B.jpg").build();
+                Timber.d("uri = [ %s ]", uri);
+                Timber.d("uri.getDecodedPath() = [ %s ]", uri.getDecodedPath());
+
+                Glide.with(getContext()).load(uri).into(image);
+
+
+            }
+        });
+
+        findComponentById(ResourceTable.Id_btn7).setClickedListener(new Component.ClickedListener() {
+            @Override
+            public void onClick(Component component) {
+
+                logBtn(component);
+
+                Glide.with(getContext()).load("resources/rawfile/B.jpg").into(image);
             }
         });
         if (verifySelfPermission("ohos.permission.WRITE_USER_STORAGE") != IBundleManager.PERMISSION_GRANTED) {

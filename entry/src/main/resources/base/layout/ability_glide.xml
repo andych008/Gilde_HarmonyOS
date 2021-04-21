@@ -69,7 +69,16 @@
                 ohos:text_size="25fp"
                 ohos:background_element="#FF51A8DD"
                 ohos:padding="10vp"
-                ohos:text="rawfile图片"/>
+                ohos:text="rawfile图片uri"/>
+            <Button
+                ohos:id="$+id:btn7"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:top_margin="20vp"
+                ohos:text_size="25fp"
+                ohos:background_element="#FF51A8DD"
+                ohos:padding="10vp"
+                ohos:text="rawfile图片string path"/>
         </DirectionalLayout>
 
 

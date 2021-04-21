@@ -1,8 +1,8 @@
 package com.bumptech.glide.load.model;
 
 
+import android.content.ContentResolver;
 import android.support.annotation.Nullable;
-
 import com.bumptech.glide.load.Options;
 import ohos.agp.utils.TextTool;
 import ohos.utils.net.Uri;
@@ -44,12 +44,24 @@ public class StringLoader<Data> implements ModelLoader<String, Data> {
     Uri uri;
     if (TextTool.isNullOrEmpty(model)) {
       return null;
+    } else if (model.startsWith("/")) {
+      uri = toFileUri(model);
     } else {
       uri = Uri.parse(model);
+      String scheme = uri.getScheme();
+      if (scheme == null) {
+        uri = toFileUri(model);
+      }
     }
     return uri;
   }
 
+  private static Uri toFileUri(String path) {
+    return new Uri.Builder()
+            .scheme(ContentResolver.SCHEME_FILE)
+            .encodedAuthority("")
+            .encodedPath(path).build();
+  }
 
   /**
    * Factory for loading {@link InputStream}s from Strings.

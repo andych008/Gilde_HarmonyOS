@@ -214,11 +214,8 @@ public class Glide {
         .append(String.class, InputStream.class, new StringLoader.StreamFactory())
 
         .append(Uri.class, InputStream.class, new HttpUriLoader.Factory())
-
-        .append(
-            Uri.class,
-            InputStream.class,
-            new UriLoader.StreamFactory(context))
+        .append(Uri.class, InputStream.class, new UriLoader.StreamFactory(context))
+        .append(Uri.class, InputStream.class, new AssetUriLoader.StreamFactory(context))
         .append(Uri.class, InputStream.class, new UrlUriLoader.StreamFactory())
 //        .append(Uri.class, InputStream.class, new MediaStoreInputStreamLoader.Factory(context))
         .append(URL.class, InputStream.class, new UrlLoader.StreamFactory())

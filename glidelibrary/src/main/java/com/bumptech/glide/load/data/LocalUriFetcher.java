@@ -24,7 +24,7 @@ public abstract class LocalUriFetcher<T> implements DataFetcher<T> {
   private static final String TAG = "LocalUriFetcher";
   private final Uri uri;
   private final DataAbilityHelper dataAbilityHelper;
-  ;
+
   private T data;
 
   /**
