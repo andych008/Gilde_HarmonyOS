@@ -9,6 +9,8 @@ import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.signature.ObjectKey;
+import timber.log.Timber;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -32,11 +34,13 @@ public class ByteArrayLoader<Data> implements ModelLoader<byte[], Data> {
   @Override
   public LoadData<Data> buildLoadData(
       byte[] model, int width, int height, Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return new LoadData<>(new ObjectKey(model), new Fetcher<>(model, converter));
   }
 
   @Override
   public boolean handles(byte[] model) {
+    Timber.d("handles() called");
     return true;
   }
 
@@ -60,6 +64,7 @@ public class ByteArrayLoader<Data> implements ModelLoader<byte[], Data> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super Data> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       Data result = converter.convert(model);
       callback.onDataReady(result);
     }

@@ -42,6 +42,7 @@ public class HttpGlideUrlLoader implements ModelLoader<GlideUrl, InputStream> {
   @Override
   public LoadData<InputStream> buildLoadData(GlideUrl model, int width, int height,
       Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     // GlideUrls memoize parsed URLs so caching them saves a few object instantiations and time
     // spent parsing urls.
     GlideUrl url = model;

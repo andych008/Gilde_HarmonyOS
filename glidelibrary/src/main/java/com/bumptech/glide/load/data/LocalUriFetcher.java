@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
+import timber.log.Timber;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -41,6 +43,7 @@ public abstract class LocalUriFetcher<T> implements DataFetcher<T> {
 
   @Override
   public final void loadData(Priority priority, DataCallback<? super T> callback) {
+    Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
     try {
       data = loadResource(uri, dataAbilityHelper);
     } catch (FileNotFoundException e) {

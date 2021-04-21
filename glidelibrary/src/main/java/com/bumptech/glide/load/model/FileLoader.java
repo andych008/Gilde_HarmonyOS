@@ -7,6 +7,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.signature.ObjectKey;
+import timber.log.Timber;
 
 import java.io.*;
 
@@ -30,11 +31,13 @@ public class FileLoader<Data> implements ModelLoader<File, Data> {
   @Override
   public LoadData<Data> buildLoadData(File model, int width, int height,
       Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return new LoadData<>(new ObjectKey(model), new FileFetcher<>(model, fileOpener));
   }
 
   @Override
   public boolean handles(File model) {
+    Timber.d("handles() called");
     return true;
   }
 
@@ -60,6 +63,7 @@ public class FileLoader<Data> implements ModelLoader<File, Data> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super Data> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       try {
         data = opener.open(file);
       } catch (FileNotFoundException e) {

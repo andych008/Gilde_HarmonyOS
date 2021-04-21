@@ -9,6 +9,7 @@ import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.signature.ObjectKey;
+import timber.log.Timber;
 
 /**
  * A put of helper classes that performs no loading and instead always returns the given model as
@@ -36,11 +37,13 @@ public class UnitModelLoader<Model> implements ModelLoader<Model, Model> {
   @Override
   public LoadData<Model> buildLoadData(Model model, int width, int height,
       Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return new LoadData<>(new ObjectKey(model), new UnitFetcher<>(model));
   }
 
   @Override
   public boolean handles(Model model) {
+    Timber.d("handles() called");
     return true;
   }
 
@@ -54,6 +57,7 @@ public class UnitModelLoader<Model> implements ModelLoader<Model, Model> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super Model> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       callback.onDataReady(resource);
     }
 

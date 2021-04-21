@@ -2,6 +2,7 @@ package com.bumptech.glide.load.model;
 
 import ohos.utils.net.Uri;
 import com.bumptech.glide.load.Options;
+import timber.log.Timber;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -34,12 +35,14 @@ public class UrlUriLoader<Data> implements ModelLoader<Uri, Data> {
 
   @Override
   public LoadData<Data> buildLoadData(Uri uri, int width, int height, Options options) {
+    Timber.d("buildLoadData() called with: uri = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", uri, width, height, options);
     GlideUrl glideUrl = new GlideUrl(uri.toString());
     return urlLoader.buildLoadData(glideUrl, width, height, options);
   }
 
   @Override
   public boolean handles(Uri uri) {
+    Timber.d("handles() called");
     return SCHEMES.contains(uri.getScheme());
   }
 

@@ -12,6 +12,8 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.signature.ObjectKey;
 import com.bumptech.glide.util.ByteBufferUtil;
 import com.bumptech.glide.util.Synthetic;
+import timber.log.Timber;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -25,11 +27,13 @@ public class ByteBufferFileLoader implements ModelLoader<File, ByteBuffer> {
   @Override
   public LoadData<ByteBuffer> buildLoadData(File file, int width, int height,
       Options options) {
+    Timber.d("buildLoadData() called with: file = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", file, width, height, options);
     return new LoadData<>(new ObjectKey(file), new ByteBufferFetcher(file));
   }
 
   @Override
   public boolean handles(File file) {
+    Timber.d("handles() called");
     return true;
   }
 
@@ -61,6 +65,7 @@ public class ByteBufferFileLoader implements ModelLoader<File, ByteBuffer> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super ByteBuffer> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       ByteBuffer result;
       try {
         result = ByteBufferUtil.fromFile(file);

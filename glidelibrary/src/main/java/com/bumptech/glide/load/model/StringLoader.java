@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.bumptech.glide.load.Options;
 import ohos.agp.utils.TextTool;
 import ohos.utils.net.Uri;
+import timber.log.Timber;
 
 import java.io.InputStream;
 
@@ -27,12 +28,14 @@ public class StringLoader<Data> implements ModelLoader<String, Data> {
   @Override
   public LoadData<Data> buildLoadData(String model, int width, int height,
       Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     Uri uri = parseUri(model);
     return uri == null ? null : uriLoader.buildLoadData(uri, width, height, options);
   }
 
   @Override
   public boolean handles(String model) {
+    Timber.d("handles() called");
     return true;
   }
 

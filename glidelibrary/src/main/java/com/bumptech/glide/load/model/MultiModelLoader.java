@@ -11,6 +11,8 @@ import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.data.DataFetcher.DataCallback;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.util.Preconditions;
+import timber.log.Timber;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +40,7 @@ class MultiModelLoader<Model, Data> implements ModelLoader<Model, Data> {
   @Override
   public LoadData<Data> buildLoadData(Model model, int width, int height,
       Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     Key sourceKey = null;
     int size = modelLoaders.size();
     List<DataFetcher<Data>> fetchers = new ArrayList<>(size);
@@ -57,6 +60,7 @@ class MultiModelLoader<Model, Data> implements ModelLoader<Model, Data> {
 
   @Override
   public boolean handles(Model model) {
+    Timber.d("handles() called");
     for (ModelLoader<Model, Data> modelLoader : modelLoaders) {
       if (modelLoader.handles(model)) {
         return true;
@@ -90,6 +94,7 @@ class MultiModelLoader<Model, Data> implements ModelLoader<Model, Data> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super Data> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       this.priority = priority;
       this.callback = callback;
       exceptions = throwableListPool.acquire();
@@ -142,6 +147,7 @@ class MultiModelLoader<Model, Data> implements ModelLoader<Model, Data> {
     }
 
     private void startNextOrFail() {
+      Timber.d(" -----> startNextOrFail() called");
       if (currentIndex < fetchers.size() - 1) {
         currentIndex++;
         loadData(priority, callback);

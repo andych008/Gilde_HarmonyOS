@@ -5,6 +5,8 @@ import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoader.LoadData;
+import timber.log.Timber;
+
 import java.io.File;
 import java.util.List;
 
@@ -88,6 +90,7 @@ class DataCacheGenerator implements DataFetcherGenerator,
 
   @Override
   public void onDataReady(Object data) {
+    Timber.d("onDataReady() called with: data = [ %s ]", data);
     cb.onDataFetcherReady(sourceKey, data, loadData.fetcher, DataSource.DATA_DISK_CACHE, sourceKey);
   }
 

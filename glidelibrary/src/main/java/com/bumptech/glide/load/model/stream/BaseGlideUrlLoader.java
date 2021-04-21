@@ -9,6 +9,7 @@ import com.bumptech.glide.load.model.Headers;
 import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;
 import ohos.agp.utils.TextTool;
+import timber.log.Timber;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public abstract class BaseGlideUrlLoader<Model> implements ModelLoader<Model, In
   @Override
   @Nullable
   public LoadData<InputStream> buildLoadData(Model model, int width, int height, Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     GlideUrl result = null;
     if (modelCache != null) {
       result = modelCache.get(model, width, height);

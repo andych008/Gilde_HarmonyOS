@@ -11,6 +11,8 @@ import com.bumptech.glide.util.ContentLengthInputStream;
 import com.bumptech.glide.util.LogTime;
 import com.bumptech.glide.util.Synthetic;
 import ohos.agp.utils.TextTool;
+import ohos.hiviewdfx.HiLog;
+import timber.log.Timber;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +52,7 @@ public class HttpUrlFetcher implements DataFetcher<InputStream> {
 
   @Override
   public void loadData(Priority priority, DataCallback<? super InputStream> callback) {
+    Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
     long startTime = LogTime.getLogTime();
     final InputStream result;
     try {

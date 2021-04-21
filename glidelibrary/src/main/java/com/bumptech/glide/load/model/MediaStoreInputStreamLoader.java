@@ -13,6 +13,7 @@ import ohos.app.Context;
 import ohos.data.resultset.ResultSet;
 import ohos.media.photokit.metadata.AVStorage;
 import ohos.utils.net.Uri;
+import timber.log.Timber;
 
 import java.io.*;
 
@@ -54,6 +55,7 @@ public final class MediaStoreInputStreamLoader implements ModelLoader<Uri, Input
 
     @Override
     public void loadData(Priority priority, DataCallback<? super InputStream> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       try {
         ResultSet result = dataAbilityHelper.query(uri, PROJECTION, null);
 

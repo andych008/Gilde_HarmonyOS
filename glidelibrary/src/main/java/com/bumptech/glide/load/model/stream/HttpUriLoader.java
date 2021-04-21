@@ -38,7 +38,7 @@ public class HttpUriLoader implements ModelLoader<Uri, InputStream> {
 
   @Override
   public boolean handles(Uri model) {
-    Timber.d("handles() called with: model = [ %s ]", model);
+    Timber.d("handles() called");
     return SCHEMES.contains(model.getScheme());
   }
 

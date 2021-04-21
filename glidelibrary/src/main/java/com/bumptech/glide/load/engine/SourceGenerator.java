@@ -8,6 +8,8 @@ import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoader.LoadData;
 import com.bumptech.glide.util.LogTime;
+import timber.log.Timber;
+
 import java.util.Collections;
 
 /**
@@ -129,6 +131,7 @@ class SourceGenerator implements DataFetcherGenerator,
   @Override
   public void onDataFetcherReady(Key sourceKey, Object data, DataFetcher<?> fetcher,
       DataSource dataSource, Key attemptedKey) {
+    Timber.d("onDataFetcherReady() called with: sourceKey = [ %s ], data = [ %s ], fetcher = [ %s ], dataSource = [ %s ], attemptedKey = [ %s ]", sourceKey, data, fetcher, dataSource, attemptedKey);
     // This data fetcher will be loading from a File and provide the wrong data source, so override
     // with the data source of the original fetcher
     cb.onDataFetcherReady(sourceKey, data, fetcher, loadData.fetcher.getDataSource(), sourceKey);

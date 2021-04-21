@@ -5,6 +5,8 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
+import timber.log.Timber;
+
 import java.io.InputStream;
 import java.net.URL;
 
@@ -25,11 +27,13 @@ public class UrlLoader implements ModelLoader<URL, InputStream> {
 
   @Override
   public LoadData<InputStream> buildLoadData(URL model, int width, int height, Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return glideUrlLoader.buildLoadData(new GlideUrl(model), width, height, options);
   }
 
   @Override
   public boolean handles(URL model) {
+    Timber.d("handles() called");
     return true;
   }
 

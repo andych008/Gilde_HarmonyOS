@@ -1,6 +1,7 @@
 package com.istone.myapplication;
 
 import ohos.aafwk.ability.AbilityPackage;
+import timber.log.Timber;
 
 /**
  * description harmonyos
@@ -12,6 +13,6 @@ public class HarmonyOS extends AbilityPackage {
     public void onInitialize() {
 
         super.onInitialize();
-
+        Timber.plant(new Timber.DebugTree());
     }
 }

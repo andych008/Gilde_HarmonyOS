@@ -141,7 +141,7 @@ public final class Log {
     }
 
     public static boolean isLoggable(String tag, int level){
-        return HiLog.isLoggable(GLIDE_DOMAIN,tag, level);
+        return true;
     }
 
 
@@ -201,6 +201,7 @@ public final class Log {
     }
 
 
+    static HiLogLabel lable = new HiLogLabel(HiLog.DEBUG, GLIDE_DOMAIN, "Glide");
     /**
      * @param logType LogUtils.INFO || LogUtils.ERROR || LogUtils.DEBUG|| LogUtils.WARN
      * @param tag     日志标识  根据喜好，自定义
@@ -208,23 +209,23 @@ public final class Log {
      */
     public static int printlns(int logType, String tag, String message) {
 
-        HiLogLabel lable = new HiLogLabel(HiLog.LOG_APP, GLIDE_DOMAIN, tag);
-        switch (logType) {
-            case INFO:
-                HiLog.info(lable, message);
-                break;
-            case ERROR:
-                HiLog.error(lable, message);
-                break;
-            case DEBUG:
-                HiLog.debug(lable, message);
-                break;
-            case WARN:
-                HiLog.warn(lable, message);
-                break;
-            default:
-                break;
-        }
+//        switch (logType) {
+//            case INFO:
+//                HiLog.info(lable, "%s : %s", tag, message);
+//                break;
+//            case ERROR:
+//                HiLog.error(lable, "%s : %s", tag, message);
+//                break;
+//            case DEBUG:
+//                HiLog.debug(lable, "%s : %s", tag, message);
+//                break;
+//            case WARN:
+//                HiLog.warn(lable, "%s : %s", tag, message);
+//                break;
+//            default:
+//                HiLog.debug(lable, "%s : %s", tag, message);
+//                break;
+//        }
         return 0;
     }
 

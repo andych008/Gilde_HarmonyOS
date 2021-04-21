@@ -6,6 +6,8 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.signature.ObjectKey;
+import timber.log.Timber;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,11 +38,13 @@ public final class DataUrlLoader<Data> implements ModelLoader<String, Data> {
 
   @Override
   public LoadData<Data> buildLoadData(String model, int width, int height, Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return new LoadData<>(new ObjectKey(model), new DataUriFetcher<>(model, dataDecoder));
   }
 
   @Override
   public boolean handles(String url) {
+    Timber.d("handles() called");
     return url.startsWith(DATA_SCHEME_IMAGE);
   }
 
@@ -71,6 +75,7 @@ public final class DataUrlLoader<Data> implements ModelLoader<String, Data> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super Data> callback) {
+      Timber.d("loadData() called with: priority = [ %s ], callback = [ %s ]", priority, callback);
       try {
         data = reader.decode(dataUri);
         callback.onDataReady(data);

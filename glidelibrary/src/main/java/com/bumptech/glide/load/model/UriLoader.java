@@ -7,6 +7,7 @@ import com.bumptech.glide.load.data.StreamLocalUriFetcher;
 import com.bumptech.glide.signature.ObjectKey;
 import ohos.app.Context;
 import ohos.utils.net.Uri;
+import timber.log.Timber;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -43,11 +44,13 @@ public class UriLoader<Data> implements ModelLoader<Uri, Data> {
   @Override
   public LoadData<Data> buildLoadData(Uri model, int width, int height,
                                       Options options) {
+    Timber.d("buildLoadData() called with: model = [ %s ], width = [ %s ], height = [ %s ], options = [ %s ]", model, width, height, options);
     return new LoadData<>(new ObjectKey(model), factory.build(model));
   }
 
   @Override
   public boolean handles(Uri model) {
+    Timber.d("handles() called");
     return SCHEMES.contains(model.getScheme());
   }
 

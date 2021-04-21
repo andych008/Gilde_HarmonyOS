@@ -14,6 +14,7 @@ import com.bumptech.glide.util.LogTime;
 import com.bumptech.glide.util.Synthetic;
 import com.bumptech.glide.util.pool.FactoryPools.Poolable;
 import com.bumptech.glide.util.pool.StateVerifier;
+import timber.log.Timber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -357,6 +358,7 @@ class DecodeJob<R> implements DataFetcherGenerator.FetcherReadyCallback,
   @Override
   public void onDataFetcherReady(Key sourceKey, Object data, DataFetcher<?> fetcher,
       DataSource dataSource, Key attemptedKey) {
+    Timber.d("onDataFetcherReady() called with: sourceKey = [ %s ], data = [ %s ], fetcher = [ %s ], dataSource = [ %s ], attemptedKey = [ %s ]", sourceKey, data, fetcher, dataSource, attemptedKey);
     this.currentSourceKey = sourceKey;
     this.currentData = data;
     this.currentFetcher = fetcher;
